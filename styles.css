@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri&family=Fira+Sans&display=swap');
+
 body {
     background-color: #fff;
     color: #000;
     font-size: 18px;
-    font-family: "IM Fell Great Primer", "Times New Roman", serif;
+    font-family: 'Fira Sans', sans-serif, "Times New Roman", serif;
     text-align: left;
     position: absolute;
     top: 10%;
@@ -16,6 +18,7 @@ h1 {
     font-size: 2.5rem;
     font-weight: normal;
     /* font-style: italic; */
+    font-family: "Amiri", "Times New Roman", serif;
     margin: 0;
     padding: 0;
 }
@@ -59,7 +62,7 @@ li:before {
 }
 
 li li:before {
-    content: "|";
+    content: "»";
     padding-right: 5px;
   }
 
