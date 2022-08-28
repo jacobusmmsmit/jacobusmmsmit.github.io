@@ -1,0 +1,170 @@
+<html>
+
+<head>
+    <title>My thoughts on JAX and Julia</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <div class="wrapped">
+        <h1>My thoughts on JAX and Julia</h1>
+        <p><a href="../index.html">home</a></p>
+        <p><a href="../blog.html">blog</a></p>
+        <p>One of the best things any programmer can do is learn another
+            language. It forces you to think in a different way to solve problems
+            and expands your mental and technical toolboxes. After working in both
+            languages on multiple projects, I would recommend everyone using either
+            JAX or Julia learn to use the other.</p>
+        <h2 id="shared-attributes">Shared attributes</h2>
+        <p>I consider both languages to be advanced tools in the realm of
+            scientific computing. JAX offers a DSL with many restrictions on
+            function purity and control flow and Julia’s language design requires
+            careful thought to be fully taken advantage of in all but the simplest
+            of applications.</p>
+        <p>Writing code without a proper understanding of how the respective
+            tools work will result in frustrating, error-prone development
+            potentially leading to inefficient code. Compare this to NumPy, for
+            example, which places far fewer restrictions on what is or isn’t a valid
+            expression as it doesn’t have the same goals, namely performance and
+            correctness, as the more constraining tools.</p>
+        <p>On the flipside, with an appreciation for the inner mechanics of the
+            compiler one can write concise code to perform complex transformations.
+            Moreover, this code will be free of the syntactic noise found in
+            traditional performant approaches and the delicate, hacky tendencies of
+            simpler tools.</p>
+        <p>Luckily, another strength of both tools is the community supporting
+            them. If a user is struggling with a particular problem or wants some
+            advice on their code then there are many sponges of knowledge lurking on
+            the discussion platforms — primarily Discourse for Julia and GitHub for
+            JAX — and so no question (following the <a
+                href="https://discourse.julialang.org/t/please-read-make-it-easier-to-help-you/14757">guidelines</a>)
+            is left unanswered. Unfortunately, this has the consequence that a lot
+            of information is buried in discussions or the brains of a clever few,
+            something that is especially impactful as documentation can be lacking
+            in some areas. While these may be mostly edge cases, the curse of
+            dimensionality tells us that if a project is complicated enough, it’s
+            very likely that one will run into a problem that can only be solved by
+            such information.</p>
+        <h2 id="julia-is-less-restrictive">Julia is less restrictive</h2>
+        <p>The approach taken by Julia’s core creators is that Julia is a
+            general-purpose language and is more than capable of being used beyond
+            scientific computing. Its allows a mix of procedural and functional
+            code, offers strong meta-programming capabilities, and has libraries
+            stretching nearly every domain.</p>
+        <p>As alluded to earlier, JAX is specifically built for high-performance
+            machine learning research. To this end, while it comes as a Python
+            extension (or two), it functions as a functional array programming
+            language that leaves everything unrelated to this to its host
+            language.</p>
+        <p>The restrictions JAX imposes are very well explained in <a
+                href="https://jax.readthedocs.io/en/latest/notebooks/Common_Gotchas_in_JAX.html">its
+                documentation</a> and this provides a refreshingly simple list of things
+            that the programmer has to take into account while reasoning about the
+            implementation of an algorithm. In summary, functions must be pure,
+            arrays are immutable and the limited updates it allows are performed
+            out-of-place, compiled function arguments must be JAX arrays or directly
+            derived therefrom, if-statements cannot depend on run-time values, and
+            random numbers require slightly more than zero effort.</p>
+        <p>Julia’s comparatively permissive attitude is fantastic for those who
+            “just want things to work” until the user inevitably notices how
+            painfully slow their program is running and either complains to the
+            community or goes back to Python. It is precisely because of its
+            general-purpose goal that the language hands out footguns so freely.
+            Unwilling to impose what is or isn’t possible, it won’t make so much as
+            a peep when encountering untyped global variables, a type instability in
+            the output of a function, abstract typed containers or an instruction to
+            heap-allocate the same vector a million times even if it never leaves
+            scope.</p>
+        <p>On the other hand, if you are in a field that JAX is designed for
+            then everything you’ll need to do just works. In my personal experience,
+            JAX’s limitations are a blessing more often than a curse. The fact that
+            the “one way to be correct” is functional is a core part of why JAX
+            <em>feels</em> so good as it is a completely natural way of thinking
+            about the maths-heavy domain of machine learning and data science. In
+            comparison, when I program in Julia I often <em>want</em> to write code
+            functionally, but can’t afford to for performance reasons because a
+            for-loop would be so much faster. I applaud the fact that I can write
+            tacit functions with the unicode character <code>⚬</code> meaning
+            composition (e.g. <code>gcd ⚬ collect ⚬ extrema</code> from <a
+                href="https://www.youtube.com/watch?v=LWgcukcpo9A">this fun series</a>),
+            but I weep when I have to go from thinking in terms of high-level array
+            transformations to thinking in terms of for-loops, indices, and
+            procedural updates.
+        </p>
+        <h2 id="julias-packaging-benchmarking-and-help-tools-are-unmatched-by-python">Julia’s
+            packaging, benchmarking, and help tools are unmatched by Python</h2>
+        <p>Rust’s Cargo is the gold standard. For such a complex language, Cargo
+            is a beacon of user-friendly design (and btw it’s 🔥 blazingly fast 🔥).
+            Leaning heavily on Cargo’s shoulders, Pkg makes doing things the right
+            way easy. It makes environments, dependency management and packaging
+            painless, which is incredibly valuable as we try to break out of the
+            replication crisis.</p>
+        <p>The best efforts in the Python ecosystem to replicate Cargo <del>’s
+                successes</del> are Poetry (v1.0 in December 2019) and Hatch (v1.0 in
+            April 2022). However, their adoption has been less-than-instant in the
+            scientific community, a people well known for unenthusiastically
+            learning badly-designed software and developing Stockholm syndrome once
+            something new comes along.</p>
+        <p>What these packaging tools don’t enjoy is the same level of
+            integration into their target language as Julia’s Pkg. Julia’s REPL
+            could be a section all on its own, but its Pkg mode makes it trivial to
+            do useful but odd things like test out a new package, only to uninstall
+            it 30s later.</p>
+        <p>Similarly, <code>?</code> mode in the REPL is amazing, especially
+            when package developers design around it. Not having to close my window
+            to look up documentation on pretty much anything is a great benefit and
+            going back to Python feels like a complete paradigm shift.</p>
+        <p>Finally, once you’ve used BenchmarkTools you never want to go back to
+            timeit. Compared to timeit’s bizarre syntax, the builtin
+            <code>@time</code> and BenchmarkTools’ <code>@btime</code> and
+            <code>@benchmark</code> allow you to annotate a line of code and
+            immediately know its distribution of execution times, how many
+            allocations occur, and the total space allocated.
+        </p>
+        <h2 id="julia-is-always-compiled-jax-has-python-as-a-fallback">Julia is
+            always compiled, JAX has Python as a fallback</h2>
+        <p>The compiled nature of both tools means that the time between running
+            a script and seeing results is far larger than an interpreted language
+            like Python. It’s no secret that JAX’s compilation takes far longer than
+            Julia’s in many cases, but the fact that JAX users can selectively
+            compile bits of their code means that one of Julia’s biggest pain
+            points, time-to-first-X, can be completely sidestepped.</p>
+        <h2 id="python-is-a-limiting-surrogate-language-for-jax">Python is a
+            limiting surrogate language for JAX</h2>
+        <p>Julia was designed around multiple dispatch. Its system of abstract,
+            concrete, and parametric types give rise to an incredibly useful toolbox
+            for writing generic, performant code. It also provides simple,
+            extensible ways for handling many problems that occur commonly in
+            science, such as missing values handled through the <code>Missing</code>
+            type. As a side effect, the type system also provides another one of
+            Julia’s more frustrating points: time-to-first-<code>Method Error</code>
+            (as anyone who has used autodiff in Julia will know).</p>
+        <p>Python’s type system is a cobbled together afterthought that looks
+            especially weak in the current landscape of programming languages. JAX
+            unfortunately suffers for this, even in its limited scope of array
+            programming, and examples can be seen in the existence and design of <a
+                href="https://github.com/google/jaxtyping">jaxtyping</a>. jaxtyping is a
+            fantastic package which essentially builds a new parametric type system
+            out of strings.</p>
+        <h2 id="which-tool-should-i-use">Which tool should I use?</h2>
+        <p>JAX and Julia are powerful tools that require a non-trivial amount of
+            investment to wield fully. JAX’s more restrictive approach means that it
+            is the perfect tool for its limited scope, requiring less investment to
+            master than its competitor. Julia main goal was to solve the
+            two-language problem and it has done so fairly well. Its limitations to
+            more widespread adoption in science come mostly from its frustrating
+            error messages, slow compilation speed, incredibly high
+            knowledge-ceiling of mastery, and lack of teaching tools (and a
+            JetBrains designed IDE).</p>
+        <p>Speaking on the subjects that I have worked on myself: * for pure
+            deep learning and machine learning research I would recommend JAX,
+            particularly <a href="https://github.com/patrick-kidger/equinox">Equinox</a> for those
+            coming from Julia and are used to a high degree of composability. * for
+            scientific projects in applied machine learning (or really any domain
+            where you would be gluing JAX code into Python) then Julia was made for
+            you. The SciML ecosystem is fantastic and its documentation is pretty
+            extensive.</p>
+    </div>
+</body>
+
+</html>
