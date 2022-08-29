@@ -62,14 +62,14 @@ a:hover {
 
 span {
   display: block;
-  width: 500px;
+  width: 28em;
   word-wrap: break-word;
   line-height: 2;
 }
 
 ul {
   list-style: none;
-  width: 700px;
+  width: 39em;
   margin-left: 0;
   padding-left: 0;
   line-height: 1.5;
@@ -84,13 +84,13 @@ li {
 
 li:before {
   content: "+";
-  padding-right: 5px;
+  padding-right: 0.27px;
 }
 
 .wrapped {
-  width: 700px;
+  width: 39em;
   word-wrap: break-word;
-  padding-bottom: 300px;
+  padding-bottom: 17em;
 }
 
 /* li li:before {
