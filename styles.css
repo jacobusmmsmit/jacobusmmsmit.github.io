@@ -26,15 +26,25 @@ body {
   padding: 0 1rem;
 }
 
+.container * {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
 .left, .right {
   flex: 1;
   min-width: 0;
+}
+
+.left {
+  flex-shrink: 1;
 }
 
 .right {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  flex-shrink: 0; /* keep image from shrinking too much */
 }
 
 .right img {
@@ -154,5 +164,4 @@ li:before {
 .wrapped {
   word-wrap: break-word;
   padding-bottom: 17em;
-  /* remove: width: 39em; */
 }
