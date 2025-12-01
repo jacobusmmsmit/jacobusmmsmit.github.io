@@ -21,7 +21,7 @@ body {
 .container {
   display: flex;
   gap: 2rem;                    /* small space between columns */
-  max-width: 900px;             /* <<< controls how close columns appear */
+  max-width: 800px;             /* <<< controls how close columns appear */
   width: 100%;
   margin: 5% auto 0 auto;       /* centered, with top spacing */
   padding: 0 1rem;              /* collapsible side whitespace */
@@ -43,6 +43,18 @@ body {
   max-width: 260px;             /* consistent look on wide screens */
   height: auto;
   border-radius: 8px;
+}
+
+.right figure {
+  text-align: center;
+  margin: 0;
+}
+
+.right figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #333;
 }
 
 /* When screen is narrow: collapse columns naturally */
