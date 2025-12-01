@@ -1,44 +1,67 @@
 @import url('https://fonts.googleapis.com/css2?family=Amiri&family=Fira+Sans&display=swap');
 
-/* --- Layout for two-column centered page --- */
+/* --- Layout for centered, narrow 2-column page, Bootstrap-style --- */
+
 body {
   background-color: #ffe;
   color: #000;
   font-size: 18px;
   font-family: 'Fira Sans', sans-serif, "Times New Roman", serif;
 
-  /* removed absolute positioning — replaced by flex centering */
   margin: 0;
   padding: 0;
 
   display: flex;
-  justify-content: center;   /* center container horizontally */
-  align-items: flex-start;   /* align from top, not vertical center */
+  justify-content: center;      /* center horizontally */
+  align-items: flex-start;
   min-height: 100vh;
 }
 
+/* This behaves like Bootstrap's .container */
 .container {
   display: flex;
-  width: 80%;
-  max-width: 1200px;   /* can adjust to taste */
-  margin-top: 5%;
+  gap: 2rem;                    /* small space between columns */
+  max-width: 900px;             /* <<< controls how close columns appear */
+  width: 100%;
+  margin: 5% auto 0 auto;       /* centered, with top spacing */
+  padding: 0 1rem;              /* collapsible side whitespace */
 }
 
 .left, .right {
-  width: 50%;
-  padding: 20px;
+  flex: 1;                      /* equal-width columns */
+  min-width: 0;                 /* allows text wrapping */
 }
 
 .right {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .right img {
-  width: 50%;   /* image is 50% of right column */
+  width: 75%;                   /* slightly smaller image */
+  max-width: 260px;             /* consistent look on wide screens */
   height: auto;
-  border-radius: 8px; /* optional aesthetic */
+  border-radius: 8px;
+}
+
+/* When screen is narrow: collapse columns naturally */
+@media (max-width: 800px) {
+  .container {
+    flex-direction: column;
+    max-width: 600px;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .right {
+    justify-content: center;
+  }
+
+  .right img {
+    width: 50%;
+    max-width: 200px;
+  }
 }
 
 /* --- Existing typography & element styles --- */
